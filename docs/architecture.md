@@ -45,8 +45,7 @@ QuestionsPage                  ← хранит параметры запрос�
 │   │           ├── (строка меты)    ← div-обёртка, flex: мета слева, меню справа
 │   │           │   ├── QuestionMeta ← рейтинг, сложность (<dl>)
 │   │           │   └── QuestionMenu ← ⋮ меню доп. действий (ОТЛОЖЕНО, не в текущей итерации)
-│   │           ├── QuestionImage    ← картинка с примером кода
-│   │           └── answer (текст)
+│   │           └── answer (HTML)
 │   └── Pagination
 │
 └── FiltersPanel
@@ -77,7 +76,7 @@ src/
 ├── features/
 │   ├── questions/
 │   │   ├── components/   QuestionsSection, QuestionList, QuestionItem,
-│   │   │                 QuestionMeta, QuestionImage
+│   │   │                 QuestionMeta
 │   │   ├── hooks/        useQuestions.js
 │   │   └── api/          fetchQuestions.js
 │   └── filters/
@@ -102,7 +101,6 @@ src/
 | Список вопросов | `<ul>` / `<li>` |
 | Аккордеон | `<h3><button aria-expanded aria-controls="{id}">…</button></h3>` — шапка (кнопка, а не `<div onClick>`); тело — `<div id="{id}" hidden={!isOpen}>` без `role="region"` (панелей много, ориентиры засорят навигацию). Тело рендерится всегда и прячется атрибутом `hidden`: `aria-controls` всегда ссылается на существующий элемент, и позже можно добавить анимацию. Элементу с `hidden` не задавать `display` в CSS, иначе он перебьёт скрытие. Уникальный id через `useId` |
 | Мета | один `<dl>` (список описаний, не таблица) с двумя парами, каждая в `<div>` для стилизации плашки: `<div><dt>Рейтинг:</dt><dd>4</dd></div>` и `<div><dt>Сложность:</dt><dd>10</dd></div>` |
-| Картинка | `<figure><img alt loading="lazy" width height></figure>`, рендерится только если картинка есть |
 | Пагинация | `<nav aria-label="Пагинация">` + `<ul>` кнопок, текущая страница с `aria-current="page"`, многоточие `aria-hidden` |
 | Фильтры | `<form role="search">`, поиск `<input type="search">` с `<label>`, каждая группа `<fieldset>` + `<legend>` |
 | Чипы | во всех группах мультивыбор: `<button aria-pressed>` (проще) или скрытый `checkbox` + `<label>` (семантичнее) |
@@ -127,6 +125,7 @@ src/
 4. Вычисление номеров страниц (`[1, 2, 3, '…', 24]`) вынесено в чистую функцию `getPageRange(current, total)`, `Pagination` только рисует результат.
 5. Строка запроса собирается в одном месте, в `fetchQuestions`. Компоненты и хуки работают с массивами, о формате URL не знают.
 6. Ответы на вопросы (`longAnswer`, `shortAnswer`) приходят из API как HTML-строки. Они выводятся через `dangerouslySetInnerHTML` только после `DOMPurify.sanitize`. Очистка выполняется в адаптере `fetchQuestions` (один раз при получении), компоненты получают уже безопасную строку. Обёртка — `<div>`, не `<p>`: внутри свои `<p>`, `<ul>`, `<h2>`. Стили задаются вложенными селекторами от обёртки (`.answer p`), классы из API игнорируются.
+7. Картинки вопросов (`imageSrc`) не выводятся, компонента `QuestionImage` нет.
 
 ## Отложено (следующие итерации)
 
