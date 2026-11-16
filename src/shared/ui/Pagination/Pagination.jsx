@@ -1,28 +1,47 @@
-export function Pagination() {
+import { getPageRange, ELLIPSIS } from "../../lib/getPageRange"
+
+export function Pagination({ totalPages, currentPage, onPageChange }) {
+
+    const pages = getPageRange(currentPage, totalPages);
+
+    if (totalPages === 0) return null;
+
     return (
         <nav aria-label="Пагинация">
             <ul>
                 <li>
-                    <button aria-current="page">1</button>
+                    <button
+                        aria-label="Предыдущая страница"
+                        type="button"
+                        onClick={() => onPageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >Назад</button>
                 </li>
-                <li>
-                    <button>2</button>
-                </li>
-                <li>
-                    <button>3</button>
-                </li>
-                <li>
-                    <button>4</button>
+                {pages.map((page, index) => {
+
+                    if (page === ELLIPSIS) return (
+                        <li key={`ellipsis-${index}`}>
+                            <span aria-hidden="true">{page}</span>
+                        </li>
+                    )
                     
-                </li>
+                    return (<li key={page}>
+                        <button 
+                            onClick={() => onPageChange(page)} 
+                            type="button"
+                            aria-current={page === currentPage ? 'page' : undefined}
+                        >
+                            {page}
+                        </button>
+                    </li>)
+                })}
                 <li>
-                    <button>5</button>
-                </li>
-                <li>
-                    <span aria-hidden="true">...</span>
-                </li>
-                <li>
-                    <button>Последняя страница</button>
+                    <button
+                        aria-label="Следующая страница"
+                        type="button"
+                        onClick={() => onPageChange(currentPage + 1)} 
+                        disabled={currentPage === totalPages}
+                    >Вперед</button>
                 </li>
             </ul>
         </nav>

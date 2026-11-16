@@ -1,27 +1,35 @@
 import { useEffect, useState } from "react";
 import { fetchQuestions } from "../api/fetchQuestions"
 
-export const useQuestions = () => {
+export const useQuestions = (page) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
     const [questions, setQuestions] = useState([]);
-    const [total, setTotal] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
+        const controller = new AbortController();
+
         const fetchData = async () => {
+            setIsLoading(true);
+            setIsError(false);
+
             try {
-                const result = await fetchQuestions();
+                const result = await fetchQuestions(page, controller.signal);
                 setQuestions(result.questions);
-                setTotal(result.total);
+                setTotalPages(result.totalPages);
             } catch (error) {
+                if (controller.signal.aborted) return;
                 console.error(error);
                 setIsError(true);
             } finally {
-                setIsLoading(false);
+                if (!controller.signal.aborted) setIsLoading(false);
             }
         }
         fetchData();
-    }, [])
 
-    return {isLoading, isError, questions, total} 
+        return () => controller.abort();
+    }, [page])
+
+    return {isLoading, isError, questions, totalPages} 
 }
