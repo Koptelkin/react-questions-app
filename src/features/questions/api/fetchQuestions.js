@@ -1,13 +1,16 @@
 import DOMPurify from 'dompurify';
+import { PAGE_SIZE } from '../constants';
 
-export const fetchQuestions = async () => {
+export const fetchQuestions = async (page, controllerSignal) => {
 
     const urlParams = new URLSearchParams({
-        page: 1,
-        limit: 10
+        page: page,
+        limit: PAGE_SIZE,
     })
 
-    const response = await fetch(`https://api.yeatwork.ru/questions/public-questions?${urlParams.toString()}`);
+    const response = await fetch(`https://api.yeatwork.ru/questions/public-questions?${urlParams.toString()}`, {
+        signal: controllerSignal
+    });
     if (!response.ok) {
         throw new Error('Ошибка при выполнении запроса')
     }
@@ -22,6 +25,6 @@ export const fetchQuestions = async () => {
             complexity: question.complexity
         }
     })
-    const total = body.total;
-    return {questions, total};
+    const totalPages = Math.ceil(body.total / PAGE_SIZE);
+    return {questions, totalPages};
 }
