@@ -104,6 +104,7 @@ src/
 │       ├── api/          fetchSpecializations.js, fetchSkills.js
 │       └── constants.js  опции сложности и рейтинга
 └── shared/
+    ├── api/              config.js  (API_BASE_URL — общий адрес сервера для всех запросов)
     ├── ui/               Pagination, Chip, Badge, Icon
     ├── hooks/            useDebounce.js
     └── lib/              getPageRange.js
@@ -144,7 +145,7 @@ src/
 4. Вычисление номеров страниц (`[1, 2, 3, '…', 24]`) вынесено в чистую функцию `getPageRange(current, totalPages)`, `Pagination` только рисует результат.
    - Размер страницы — константа `PAGE_SIZE` в `features/questions/constants.js`. Её использует только `fetchQuestions`: подставляет в `limit` и считает `totalPages = Math.ceil(total / limit)` по данным ответа. Адаптер возвращает `{ questions, totalPages }`.
    - `Pagination` (в `shared/ui`) не импортирует `PAGE_SIZE` и не знает про `total`: получает пропсами `currentPage`, `totalPages`, `onPageChange`. `onPageChange` вызывается с номером страницы (числом). Кнопки «Назад» / «Вперёд» блокируются (`disabled`) на первой / последней странице. При `totalPages === 0` (данные ещё не пришли) пагинация не рендерится.
-5. Строка запроса собирается в одном месте, в `fetchQuestions`. Компоненты и хуки работают с массивами, о формате URL не знают.
+5. Строка запроса собирается в одном месте, в `fetchQuestions`. Компоненты и хуки работают с массивами, о формате URL не знают. Базовый адрес сервера — константа `API_BASE_URL` из `shared/api/config.js`, путь ресурса (`/questions/public-questions`) — в самой функции запроса.
 6. Ответы на вопросы (`longAnswer`, `shortAnswer`) приходят из API как HTML-строки. Они выводятся через `dangerouslySetInnerHTML` только после `DOMPurify.sanitize`. Очистка выполняется в адаптере `fetchQuestions` (один раз при получении), компоненты получают уже безопасную строку. Обёртка — `<div>`, не `<p>`: внутри свои `<p>`, `<ul>`, `<h2>`. Стили задаются вложенными селекторами от обёртки (`.answer p`), классы из API игнорируются.
 7. Картинки вопросов (`imageSrc`) не выводятся, компонента `QuestionImage` нет.
 

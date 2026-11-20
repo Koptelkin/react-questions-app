@@ -2,12 +2,19 @@ import { useState } from "react";
 import { FiltersPanel } from "../../features/filters/components/FiltersPanel/FiltersPanel";
 import { QuestionsSection } from "../../features/questions/components/QuestionsSection/QuestionsSection";
 import { useQuestions } from "../../features/questions/hooks/useQuestions";
+import { INITIAL_FILTERS } from "../../features/filters/constants";
 
 
 export function QuestionsPage() {
 
     const [page, setPage] = useState(1);
-    const {isLoading, isError, questions, totalPages} = useQuestions(page);
+    const [filters, setFilters] = useState(INITIAL_FILTERS);
+    const {isLoading, isError, questions, totalPages} = useQuestions(page, filters);
+
+    const handleFiltersChange = (newFilters) => {
+        setFilters(newFilters);
+        setPage(1);
+    }
 
     return (
         <main>
@@ -19,7 +26,7 @@ export function QuestionsPage() {
                 currentPage={page} 
                 onPageChange={setPage}
             />
-            <FiltersPanel/>
+            <FiltersPanel filters={filters} onFiltersChange={handleFiltersChange}/>
         </main>
     )
 }
