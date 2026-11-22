@@ -7,7 +7,10 @@ export function FiltersPanel({ filters, onFiltersChange }) {
     
     return (
         <aside>
-            <SearchInput/>
+            <SearchInput 
+                onSearchChange={(value) => onFiltersChange('search', value)}
+                value={filters.search}
+            />
             <RemoteFiltersGroups
                 filters={filters}
                 onFiltersChange={onFiltersChange}
