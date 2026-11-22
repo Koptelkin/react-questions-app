@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchQuestions } from "../api/fetchQuestions"
 
-export const useQuestions = (page) => {
+export const useQuestions = (page, filters) => {
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
     const [questions, setQuestions] = useState([]);
@@ -15,7 +15,7 @@ export const useQuestions = (page) => {
             setIsError(false);
 
             try {
-                const result = await fetchQuestions(page, controller.signal);
+                const result = await fetchQuestions(page, filters, controller.signal);
                 setQuestions(result.questions);
                 setTotalPages(result.totalPages);
             } catch (error) {
@@ -29,7 +29,7 @@ export const useQuestions = (page) => {
         fetchData();
 
         return () => controller.abort();
-    }, [page])
+    }, [page, filters])
 
     return {isLoading, isError, questions, totalPages} 
 }
