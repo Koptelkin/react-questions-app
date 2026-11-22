@@ -16,6 +16,7 @@ export function RemoteFiltersGroups({ filters, onFiltersChange}) {
                 selected={filters.specialization}
                 onChange={(value) => onFiltersChange('specialization', value)}
                 multiple={false}
+                collapsedCount={5}
             />
             <FilterGroup
                 title="Навыки"
@@ -23,6 +24,7 @@ export function RemoteFiltersGroups({ filters, onFiltersChange}) {
                 selected={filters.skills}
                 onChange={(value) => onFiltersChange('skills', value)}
                 multiple={true}
+                collapsedCount={5}
             />
         </>
     )

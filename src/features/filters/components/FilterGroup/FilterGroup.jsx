@@ -1,6 +1,11 @@
+import { useState } from "react";
 import { Chip } from "../../../../shared/ui/Chip/Chip";
 
-export function FilterGroup({ title, options, selected, onChange, multiple }) {
+export function FilterGroup({ title, options, selected, onChange, multiple, collapsedCount }) {
+
+    const [isCollapsed, setIsCollapsed] = useState(true);
+    
+    const collapsedOptions = options.slice(0, collapsedCount);
 
     const isOptionSelected = (value) => {
         if (multiple) {
@@ -30,7 +35,7 @@ export function FilterGroup({ title, options, selected, onChange, multiple }) {
         <fieldset>
             <legend>{title}</legend>
             <ul>
-                {options.map(option => (
+                {(isCollapsed ? collapsedOptions : options).map(option => (
                     <li key={option.value}>
                         <Chip 
                             label={option.label} 
@@ -40,6 +45,13 @@ export function FilterGroup({ title, options, selected, onChange, multiple }) {
                     </li>
                 ))}
             </ul>
+            {options.length > collapsedCount && <button 
+                type="button" 
+                aria-expanded={!isCollapsed} 
+                onClick={() => setIsCollapsed(prev => !prev)}
+            >
+                {isCollapsed ? 'Посмотреть всё' : 'Свернуть'}
+            </button>}
         </fieldset>
     )
 }
