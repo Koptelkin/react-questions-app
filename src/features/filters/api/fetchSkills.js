@@ -17,7 +17,6 @@ export const fetchSkills = async (controllerSignal) => {
     const result = skills.map((skill) => ({
         value: skill.id,
         label: skill.title.trim(),
-        icon: skill.imageSrc
     }));
     return result;
 }
