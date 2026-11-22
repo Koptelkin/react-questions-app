@@ -114,7 +114,7 @@ src/
 │       └── constants.js  опции сложности и рейтинга
 └── shared/
     ├── api/              config.js  (API_BASE_URL — общий адрес сервера для всех запросов)
-    ├── ui/               Pagination, Chip, Badge, Icon
+    ├── ui/               Pagination, Chip, Badge, SearchIcon
     ├── hooks/            useDebounce.js
     └── lib/              getPageRange.js
 ```
@@ -144,7 +144,7 @@ src/
 | Открыт ли вопрос | `QuestionItem` | свой `useState(false)` в каждом вопросе: открыть можно несколько одновременно |
 | Справочники фильтров / загрузка / ошибка | `useFilterOptions()` в `RemoteFiltersGroups` | `useState` + `useEffect`, один раз при монтировании; оба запроса параллельно через `Promise.all` |
 | «Посмотреть все» | `FilterGroup` | `useState` |
-| Текст поиска | `SearchInput` + `useDebounce` | наверх передаётся значение после задержки |
+| Текст поиска | `SearchInput` + `useDebounce` | локальный `useState` (контролируемый инпут, каждая буква); `useDebounce(text, 500)` из `shared/hooks`; эффект обрезает отложенное значение `trim()` и вызывает `onSearchChange` **только если оно отличается от `filters.search`** (защита от бесконечного цикла из-за нового колбэка на каждом рендере и от лишнего вызова при монтировании). В самом поле не обрезается, чтобы можно было печатать пробелы между словами. Форма `role="search"`, Enter гасится `preventDefault` |
 
 ## Важные правила
 
