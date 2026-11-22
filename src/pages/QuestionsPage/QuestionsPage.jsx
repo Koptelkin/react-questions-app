@@ -11,8 +11,11 @@ export function QuestionsPage() {
     const [filters, setFilters] = useState(INITIAL_FILTERS);
     const {isLoading, isError, questions, totalPages} = useQuestions(page, filters);
 
-    const handleFiltersChange = (newFilters) => {
-        setFilters(newFilters);
+    const handleFiltersChange = (key, value) => {
+        setFilters(prev => ({
+            ...prev,
+            [key]: value
+        }));
         setPage(1);
     }
 
