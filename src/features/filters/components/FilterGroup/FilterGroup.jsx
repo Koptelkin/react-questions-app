@@ -1,12 +1,28 @@
 import { Chip } from "../../../../shared/ui/Chip/Chip";
 
-export function FilterGroup({ title, options, selected, onChange }) {
+export function FilterGroup({ title, options, selected, onChange, multiple }) {
+
+    const isOptionSelected = (value) => {
+        if (multiple) {
+            return selected.includes(value)
+        } else {
+            return selected === value
+        }
+    }
 
     const handleChipClick = (value) => {
-        if (selected.includes(value)) {
-            onChange(selected.filter((selectedOption) => selectedOption !== value))
+        if (multiple) {
+            if (isOptionSelected(value)) {
+                onChange(selected.filter((selectedOption) => selectedOption !== value))
+            } else {
+                onChange([...selected, value])
+            }
         } else {
-            onChange([...selected, value])
+            if (isOptionSelected(value)) {
+                onChange(null)
+            } else {
+                onChange(value)
+            }
         }
     }
 
@@ -19,7 +35,7 @@ export function FilterGroup({ title, options, selected, onChange }) {
                         <Chip 
                             label={option.label} 
                             onClick={() => handleChipClick(option.value)} 
-                            isSelected={selected.includes(option.value)}
+                            isSelected={isOptionSelected(option.value)}
                         />
                     </li>
                 ))}
