@@ -2,11 +2,12 @@ import { COMPLEXITY_OPTIONS, RATING_OPTIONS } from "../../constants";
 import { FilterGroup } from "../FilterGroup/FilterGroup";
 import { RemoteFiltersGroups } from "../RemoteFiltersGroups/RemoteFiltersGroups";
 import { SearchInput } from "../SearchInput/SearchInput";
+import styles from "./FiltersPanel.module.css";
 
 export function FiltersPanel({ filters, onFiltersChange }) {
     
     return (
-        <aside>
+        <aside className={styles.panel}>
             <SearchInput 
                 onSearchChange={(value) => onFiltersChange('search', value)}
                 value={filters.search}

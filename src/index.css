@@ -1,1 +1,63 @@
-/* сюда добавляем общие стили для страницы*/
+/* Общие токены дизайна: цвета, радиусы, тени, шрифты.
+   Компоненты берут значения отсюда через var(--...), а не пишут числа сами */
+:root {
+    --color-accent: #6a0bff;
+    --color-accent-soft: #f1e9ff;
+    --color-text: #1c1c1c;
+    --color-text-secondary: #4f4f4f;
+    --color-text-muted: #8a8a8a;
+    --color-border: #c4c4c4;
+    --color-border-light: #ececec;
+    --color-surface: #ffffff;
+    --color-surface-muted: #f5f5f5;
+    --color-bg: #f4f4f6;
+    --color-code-bg: #031426;
+    --color-code-text: #e3e9f2;
+
+    --radius-s: 4px;
+    --radius-m: 12px;
+    --radius-l: 24px;
+
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06);
+    --shadow-item: 0 2px 10px rgba(0, 0, 0, 0.06);
+
+    --font-main: 'Manrope', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+}
+
+/* Мини-сброс: размеры считаются вместе с padding и border */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-main);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Кнопки и поля по умолчанию не наследуют шрифт страницы */
+button,
+input {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: default;
+}
+
+/* Видимая обводка только при навигации с клавиатуры */
+:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Chip } from "../../../../shared/ui/Chip/Chip";
+import styles from "./FilterGroup.module.css";
 
 export function FilterGroup({ title, options, selected, onChange, multiple, collapsedCount }) {
 
@@ -32,9 +33,9 @@ export function FilterGroup({ title, options, selected, onChange, multiple, coll
     }
 
     return (
-        <fieldset>
-            <legend>{title}</legend>
-            <ul>
+        <fieldset className={styles.group}>
+            <legend className={styles.legend}>{title}</legend>
+            <ul className={styles.options}>
                 {(isCollapsed ? collapsedOptions : options).map(option => (
                     <li key={option.value}>
                         <Chip 
@@ -45,8 +46,9 @@ export function FilterGroup({ title, options, selected, onChange, multiple, coll
                     </li>
                 ))}
             </ul>
-            {options.length > collapsedCount && <button 
-                type="button" 
+            {options.length > collapsedCount && <button
+                className={styles.toggle}
+                type="button"
                 aria-expanded={!isCollapsed} 
                 onClick={() => setIsCollapsed(prev => !prev)}
             >
