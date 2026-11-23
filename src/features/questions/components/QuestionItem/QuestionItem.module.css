@@ -1,0 +1,135 @@
+.item {
+    background-color: var(--color-surface);
+    border-radius: var(--radius-m);
+    box-shadow: var(--shadow-item);
+}
+
+/* h3 нужен для структуры заголовков, внешне его оформляет кнопка */
+.heading {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 20px 24px;
+    border: none;
+    background: none;
+    text-align: left;
+    border-radius: var(--radius-m);
+}
+
+/* Фиолетовая точка перед заголовком */
+.toggle::before {
+    content: '';
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+}
+
+.title {
+    flex: 1;
+}
+
+.chevron {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    transition: transform 0.2s ease;
+}
+
+/* Состояние берётся из aria-expanded: отдельный класс «открыт» не нужен */
+.toggle[aria-expanded="true"] .chevron {
+    transform: rotate(180deg);
+}
+
+/* Тело аккордеона. Свойство display здесь не задаём,
+   иначе оно перебьёт атрибут hidden и тело не скроется */
+.body {
+    padding: 0 24px 24px;
+}
+
+/* --- Ответ: HTML из API. Классы из API игнорируются,
+   стили задаются вложенными селекторами от обёртки --- */
+.answer {
+    margin-top: 24px;
+    color: var(--color-text-secondary);
+    overflow-wrap: anywhere;
+}
+
+.answer p,
+.answer ul,
+.answer ol {
+    margin: 0 0 12px;
+}
+
+.answer > :last-child {
+    margin-bottom: 0;
+}
+
+.answer ul,
+.answer ol {
+    padding-left: 24px;
+}
+
+.answer h3 {
+    margin: 16px 0 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.answer strong {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+/* Код внутри текста */
+.answer code {
+    padding: 2px 6px;
+    border-radius: var(--radius-s);
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+}
+
+/* Блок кода: тёмное «окно редактора» с тремя точками сверху */
+.answer pre {
+    position: relative;
+    margin: 0 0 16px;
+    padding: 44px 28px 20px;
+    border-radius: 16px;
+    background-color: var(--color-code-bg);
+    color: var(--color-code-text);
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Три точки рисуются одним псевдоэлементом: сам круг + две тени-копии */
+.answer pre::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 28px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ff5f57;
+    box-shadow: 16px 0 0 #febc2e, 32px 0 0 #28c840;
+}
+
+/* Внутри блока код не должен выглядеть как код в тексте */
+.answer pre code {
+    padding: 0;
+    background: none;
+    color: inherit;
+    font-size: inherit;
+}

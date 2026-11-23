@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SearchIcon } from "../../../../shared/ui/SearchIcon/SearchIcon";
 import { useDebounce } from "../../../../shared/hooks/useDebounce";
+import styles from "./SearchInput.module.css";
 
 export function SearchInput({ onSearchChange, value }) {
 
@@ -18,10 +19,11 @@ export function SearchInput({ onSearchChange, value }) {
     }
 
     return (
-        <form role="search" onSubmit={(event) => event.preventDefault()}>
-            <SearchIcon/>
-            <input 
-                placeholder="Введите текст для поиска" 
+        <form className={styles.form} role="search" onSubmit={(event) => event.preventDefault()}>
+            <SearchIcon className={styles.icon}/>
+            <input
+                className={styles.input}
+                placeholder="Введите текст для поиска"
                 type="search" 
                 aria-label="Поиск по вопросам"
                 onChange={handleInputChange}

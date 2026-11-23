@@ -1,0 +1,61 @@
+.list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Номер страницы */
+.page {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 4px;
+    border: none;
+    border-radius: var(--radius-s);
+    background: none;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.page:hover {
+    color: var(--color-accent);
+}
+
+/* Текущая страница определяется по aria-current, отдельный класс не нужен */
+.page[aria-current="page"] {
+    background-color: var(--color-accent);
+    color: var(--color-surface);
+}
+
+.ellipsis {
+    padding: 0 4px;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+}
+
+/* Круглые кнопки со стрелками */
+.arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin: 0 8px;
+    padding: 0;
+    border: 1.5px solid var(--color-accent);
+    border-radius: 50%;
+    background: none;
+    color: var(--color-accent);
+}
+
+.arrow:not(:disabled):hover {
+    background-color: var(--color-accent-soft);
+}
+
+.arrow:disabled {
+    opacity: 0.35;
+}

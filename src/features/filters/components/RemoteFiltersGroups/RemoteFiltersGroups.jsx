@@ -1,12 +1,13 @@
 import { FilterGroup } from "../FilterGroup/FilterGroup";
 import { useFilterOptions } from "../../hooks/useFilterOptions";
+import styles from "./RemoteFiltersGroups.module.css";
 
 export function RemoteFiltersGroups({ filters, onFiltersChange}) {
     
     const {isLoading, isError, specializations, skills} = useFilterOptions();
 
     if (isLoading) return null;
-    if (isError) return <p>Произошла ошибка при загрузке. Обновите страницу</p>
+    if (isError) return <p className={styles.error}>Произошла ошибка при загрузке. Обновите страницу</p>
     
     return (
         <>

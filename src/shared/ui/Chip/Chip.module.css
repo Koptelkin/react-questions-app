@@ -1,0 +1,19 @@
+.chip {
+    padding: 8px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-m);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-size: 16px;
+    line-height: 1.5;
+    transition: border-color 0.15s ease;
+}
+
+.chip:hover {
+    border-color: var(--color-accent);
+}
+
+/* Выбранный чип определяется по aria-pressed, отдельный класс не нужен */
+.chip[aria-pressed="true"] {
+    border-color: var(--color-accent);
+}
